@@ -2,60 +2,149 @@ import 'package:flutter_web/material.dart';
 
 void main() => runApp(MyApp());
 
+var primaryColor = Color(0xFF2A93D5);
+
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: primaryColor,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
   @override
   Widget build(BuildContext context) {
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    var mediaQuery = MediaQuery.of(context);
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (choose the "Toggle Debug Paint" action
-          // from the Flutter Inspector in Android Studio, or the "Toggle Debug
-          // Paint" command in Visual Studio Code) to see the wireframe for each
-          // widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        child: Stack(
           children: <Widget>[
-            Text(
-              'Hello, World!',
-            ),
+            _buildMainBackground(mediaQuery),
+            _buildHeader(mediaQuery),
           ],
         ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+    );
+  }
+
+  Widget _buildHeader(MediaQueryData mediaQuery) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 48.0, top: 48.0, right: 48.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            width: mediaQuery.size.width / 8,
+            child: Text(
+              'Duis',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 38.0),
+            ),
+          ),
+          Container(
+            width: mediaQuery.size.width / 9,
+            child: SizedBox(
+              height: 28.0,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Walking Holidays",
+                    style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                      fontFamily: "sans-serif",
+                    ),
+                  ),
+                  SizedBox(height: 8.0),
+                  Container(
+                    width: 24.0,
+                    height: 2.0,
+                    color: primaryColor,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            width: mediaQuery.size.width / 9,
+            child: SizedBox(
+              height: 28.0,
+              child: Text(
+                "Cycling Holidays",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
+                  fontFamily: "sans-serif",
+                ),
+              ),
+            ),
+          ),
+          Container(
+            width: mediaQuery.size.width / 9,
+            child: SizedBox(
+              height: 28.0,
+              child: Text(
+                "Camino Tours",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
+                  fontFamily: "sans-serif",
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "Sign In",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontFamily: "sans-serif",
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(width: 48.0),
+                Icon(
+                  Icons.search,
+                  color: Colors.white,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMainBackground(MediaQueryData mediaQuery) {
+    return Positioned(
+      top: -200.0,
+      right: -190.0,
+      child: Container(
+        width: mediaQuery.size.height + 100,
+        height: mediaQuery.size.height + 100,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+            image: NetworkImage("assets/img_traveling.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
     );
   }
 }
